@@ -30,7 +30,7 @@ int main(int argc, char *argv[]){
 	        case 'l':
 	        	loption = 1;
 	        	break;
-
+//eq
 	        }
 	    }
 
