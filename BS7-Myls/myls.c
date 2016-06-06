@@ -7,6 +7,11 @@
 #include <string.h>
 #include <dirent.h>
 #include <unistd.h>
+
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
 #define MAX_PATH 1024
 
 char path[MAX_PATH];
