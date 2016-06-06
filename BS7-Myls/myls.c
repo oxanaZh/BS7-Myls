@@ -30,10 +30,8 @@ int main(int argc, char *argv[]){
 	        case 'l':
 	        	loption = 1;
 	        	break;
-//eq
 	        }
 	    }
-
 
 	readPath(path,aoption,loption);
 	return 0;
@@ -52,7 +50,16 @@ void *readPath(char *path,int aoption, int loption){
 					continue;
 				}
 				}
+				if(loption){
+					int len = strlen(dptr->d_name);
+					const char *last_two = &dptr->d_name[len-2];
+				if(strcmp(last_two, ".c")==0){
+					printf("\033[0;32;1m");
+				}
+				}
 				printf("%s\n",dptr->d_name);
+				if(loption)
+				printf("\033[0;0;0m");
 
 			}
 			closedir(dir);
