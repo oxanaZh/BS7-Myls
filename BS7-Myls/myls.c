@@ -16,8 +16,8 @@
 
 char path[MAX_PATH];
 void *readPath(char *path, int, int);
-int main(int argc, char *argv[]){
-	if(argc > 1){
+int main(int argc, char *argv[]) {
+	if (argc > 1) {
 		strcpy(path, argv[1]);
 	} else {
 		getcwd(path, MAX_PATH);
@@ -27,44 +27,48 @@ int main(int argc, char *argv[]){
 	int c;
 	int aoption = 0;
 	int loption = 0;
-	 while ( (c = getopt(argc, argv, "al")) != -1) {
-	        switch (c) {
-	        case 'a':
-	        	aoption = 1;
-	        	break;
-	        case 'l':
-	        	loption = 1;
-	        	break;
-	        }
-	    }
+	while ((c = getopt(argc, argv, "al")) != -1) {
+		switch (c) {
+		case 'a':
+			aoption = 1;
+			break;
+		case 'l':
+			loption = 1;
+			break;
+		}
+	}
 
-	readPath(path,aoption,loption);
+	readPath(path, aoption, loption);
 	return 0;
 }
-void *readPath(char *path,int aoption, int loption){
+void *readPath(char *path, int aoption, int loption) {
 	char resolved_path[MAX_PATH];
 	DIR *dir = NULL;
 	struct dirent *dptr = NULL;
 	char *dot = ".";
-	if(realpath(path, resolved_path)){
+	if (realpath(path, resolved_path)) {
 		printf("resolved_path: %s\n", resolved_path);
-		if((dir = opendir(resolved_path))){
-			while((dptr = readdir(dir))){
-				if(!aoption){
-				if(strncmp(dptr->d_name, dot,1) == 0  ){
-					continue;
+		if ((dir = opendir(resolved_path))) {
+			while ((dptr = readdir(dir))) {
+				if (!aoption) {
+					if (strncmp(dptr->d_name, dot, 1) == 0) {
+						continue;
+					}
 				}
-				}
-				if(loption){
+				if (loption) {
 					int len = strlen(dptr->d_name);
-					const char *last_two = &dptr->d_name[len-2];
-				if(strcmp(last_two, ".c")==0){
-					printf("\033[0;32;1m");
+					const char *last_two = &dptr->d_name[len - 2];
+					if (strcmp(last_two, ".c") == 0) {
+						printf("\033[0;32;1m");
+					}
+						struct stat lstruct;
+						if(stat(dptr->d_name, &lstruct) == 0 && (lstruct.st_mode & S_IXUSR)){
+							printf("\033[0;31;1m");
+					}
 				}
-				}
-				printf("%s\n",dptr->d_name);
-				if(loption)
-				printf("\033[0;0;0m");
+				printf("%s\n", dptr->d_name);
+				if (loption)
+					printf("\033[0;0;0m");
 
 			}
 			closedir(dir);
