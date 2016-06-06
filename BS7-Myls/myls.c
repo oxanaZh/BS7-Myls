@@ -1,8 +1,9 @@
 /*
  * myls.c
  *
- *  Created on: 06.06.2016
- *      Author: xenia
  */
 
+int main(int argc, char *argv[]){
 
+	return 0;
+}
