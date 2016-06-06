@@ -16,7 +16,7 @@
 
 char path[MAX_PATH];
 
-void printlstruct(char * filename);
+void printlstruct(char * filename, int);
 void *readPath(char *path, int, int);
 
 int main(int argc, char *argv[]) {
@@ -26,6 +26,13 @@ int main(int argc, char *argv[]) {
 		getcwd(path, MAX_PATH);
 
 	}
+	int len = strlen(path);
+	const char *last = &path[len - 1];
+	if (strcmp(last, "/") != 0) {
+		strcat(path,"/");
+	}
+
+
 	printf("input path: %s", path);
 	int c;
 	int aoption = 0;
@@ -67,9 +74,9 @@ void *readPath(char *path, int aoption, int loption) {
 				if (loption!=0) {
 					struct stat lstruct;
 
-					printlstruct(dptr->d_name);
+					printlstruct(dptr->d_name,loption);
 
-					if(lstat(dptr->d_name, &lstruct) == 0 && ((lstruct.st_mode & S_IXUSR) || (lstruct.st_mode & S_IXGRP) || (lstruct.st_mode & S_IXOTH) )){
+					if(lstat(dptr->d_name, &lstruct) == 0 && ((lstruct.st_mode & S_IXUSR) || (lstruct.st_mode & S_IXGRP) || (lstruct.st_mode & S_IXOTH) || (lstruct.st_mode & S_IEXEC) )){
 						printf("\033[0;31;1m");
 					}
 
@@ -99,18 +106,37 @@ void *readPath(char *path, int aoption, int loption) {
 
 }
 
-void printlstruct(char * filename){
+void printlstruct(char * filename, int loption){
 	struct stat lstruct;
 	char fullpath[MAX_PATH];
 	strcpy(fullpath,path);
+
+
+
 	strcat(fullpath,filename);
 	lstat(fullpath,&lstruct);
+
+
+
+	printf( (lstruct.st_mode & S_IRUSR) ? "r" : "-");
+	printf( (lstruct.st_mode & S_IWUSR) ? "w" : "-");
+	printf( (lstruct.st_mode & S_IXUSR) ? "x" : "-");
+	printf( (lstruct.st_mode & S_IRGRP) ? "r" : "-");
+	printf( (lstruct.st_mode & S_IWGRP) ? "w" : "-");
+	printf( (lstruct.st_mode & S_IXGRP) ? "x" : "-");
+	printf( (lstruct.st_mode & S_IROTH) ? "r" : "-");
+	printf( (lstruct.st_mode & S_IWOTH) ? "w" : "-");
+	printf( (lstruct.st_mode & S_IXOTH) ? "x\t" : "-\t");
+
+
 	printf("%ld",(long) lstruct.st_nlink);
-						printf("\t%ld",(long) lstruct.st_uid);
-						printf("\t%ld",(long) lstruct.st_gid);
-						printf("\t%lld",(long long) lstruct.st_size);
-						printf("\t%s",ctime(&lstruct.st_atime));
-						printf("\t%s", ctime(&lstruct.st_mtime));
-						printf("\t%s", ctime(&lstruct.st_ctime));
-						printf("\t%ld ",(long) lstruct.st_blksize);
+	if(loption!=2)
+		printf("\t%ld",(long) lstruct.st_uid);
+	if(loption!=3)
+		printf("\t%ld",(long) lstruct.st_gid);
+	printf("\t%lld",(long long) lstruct.st_size);
+	printf("\t%s",ctime(&lstruct.st_atime));
+	printf("\t%s", ctime(&lstruct.st_mtime));
+	printf("\t%s", ctime(&lstruct.st_ctime));
+	printf("\t%ld ",(long) lstruct.st_blksize);
 }
