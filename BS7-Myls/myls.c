@@ -26,12 +26,11 @@ void *readPath(char *path){
 	DIR *dir = NULL;
 	struct dirent *dptr = NULL;
 	char *dot = ".";
-	char *dotdot = "..";
 	if(realpath(path, resolved_path)){
 		printf("resolved_path: %s\n", resolved_path);
 		if((dir = opendir(resolved_path))){
 			while((dptr = readdir(dir))){
-				if(strcmp(dptr->d_name, dot) == 0 || strcmp(dptr->d_name, dotdot)==0){
+				if(strncmp(dptr->d_name, dot,1) == 0  ){
 					continue;
 				}
 				printf("%s\n",dptr->d_name);
