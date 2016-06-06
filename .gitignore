@@ -1,3 +1,12 @@
 /BS7-Myls/
 .cproject
 .project
+~*
+#latex
+*.aux
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.toc
+Protokoll.synctex.gz
