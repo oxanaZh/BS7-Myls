@@ -16,8 +16,8 @@
 
 char path[MAX_PATH];
 
-void printlstruct(char * filename, int);
-void *readPath(char *path, int, int);
+void printlstruct(char * filename, int, int);
+void *readPath(char *path, int, int, int);
 
 int main(int argc, char *argv[]) {
 	if (argc > 1 && strncmp(argv[1],"-",1)!=0) {
@@ -37,6 +37,7 @@ int main(int argc, char *argv[]) {
 	int c;
 	int aoption = 0;
 	int loption = 0;
+	int ooption = 0;
 	while ((c = getopt(argc, argv, "algo")) != -1) {
 		switch (c) {
 		case 'a':
@@ -49,15 +50,17 @@ int main(int argc, char *argv[]) {
 			loption = 2;
 			break;
 		case 'o':
-			loption = 3;
+			if(loption==0)
+				loption=1;
+			ooption = 1;
 			break;
 		}
 	}
 
-	readPath(path, aoption, loption);
+	readPath(path, aoption, loption, ooption);
 	return 0;
 }
-void *readPath(char *path, int aoption, int loption) {
+void *readPath(char *path, int aoption, int loption, int ooption) {
 	char resolved_path[MAX_PATH];
 	DIR *dir = NULL;
 	struct dirent *dptr = NULL;
@@ -74,7 +77,7 @@ void *readPath(char *path, int aoption, int loption) {
 				if (loption!=0) {
 					struct stat lstruct;
 
-					printlstruct(dptr->d_name,loption);
+					printlstruct(dptr->d_name,loption, ooption);
 
 					if(lstat(dptr->d_name, &lstruct) == 0 && ((lstruct.st_mode & S_IXUSR) || (lstruct.st_mode & S_IXGRP) || (lstruct.st_mode & S_IXOTH) || (lstruct.st_mode & S_IEXEC) )){
 						printf("\033[0;31;1m");
@@ -99,7 +102,7 @@ void *readPath(char *path, int aoption, int loption) {
 
 }
 
-void printlstruct(char * filename, int loption){
+void printlstruct(char * filename, int loption, int ooption){
 	struct stat lstruct;
 	char fullpath[MAX_PATH];
 	strcpy(fullpath,path);
@@ -120,7 +123,7 @@ void printlstruct(char * filename, int loption){
 	printf("%ld",(long) lstruct.st_nlink);
 	if(loption!=2)
 		printf("\t%ld",(long) lstruct.st_uid);
-	if(loption!=3)
+	if(ooption==0)
 		printf("\t%ld",(long) lstruct.st_gid);
 	printf("\t%lld",(long long) lstruct.st_size);
 	printf("\t%s",ctime(&lstruct.st_atime));
