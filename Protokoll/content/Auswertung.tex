@@ -2,17 +2,17 @@
 	\begin{itemize}
 		\item Geben Sie die typische Verzeichnisstruktur einer aktuellen Linuxdistribution an. Was ist
 		in den Verzeichnissen enthalten? Nennen Sie mindestens fünf Beispiele (wie /etc, /usr
-		usw.). Finden Sie zus ̈atzlich heraus, wo Log-Dateien gespeichert werden.
+		usw.). Finden Sie zusätzlich heraus, wo Log-Dateien gespeichert werden.
 		Wo liegen ausgelagerte Inhalte des Hauptspeichers?
 
 		Antwort: Ubuntu 16.04 Verzeichnissystem entspricht Filesystem Hierarchy Standard(FHS):
 
 		\begin{itemize}
 			\item \textbf{/} - Rootverzeichnis für alle anderen Linux Verzeichnisse.
-			 In der Regel entspricht der Bootpartition (wenn nicht anders beim Installieren eingestellt wurde),
-			 deswegen enthält  symbolischen Verknüpfungen für initrd.img und vmlinuz,
-			 die in Ordner \textit{/boot} liegen
-			 \item \textbf{/boot} - beinhaltet alle für Systemstart(Booten) benötigte Dateien
+			 In der Regel entspricht dieses der Bootpartition (wenn nicht anders beim Installieren eingestellt),
+			 deswegen enthält es symbolische Verknüpfungen für initrd.img und vmlinuz,
+			 die im Ordner \textit{/boot} liegen
+			 \item \textbf{/boot} - beinhaltet alle für den Systemstart(Booten) benötigten Dateien
 			 solche wie z.B Kernel \footnote{
 			 für Desktop \textit{vmlinuz-versionsnummer-generic},
 			 für Server \textit{vmlinuz-versionsnummer-server},
@@ -20,22 +20,22 @@
 			 }, initiale Ramdisk \footnote{
 			 \textit{initrd.img-versionsnummer-generic}/-\textit{server}/-\textit{virtual}}
 			 und das Programm für den Memorytest \textit{memtest86.bin}.
-			 Außerdem enthält dieser Verzeichnis Ordner \textit{grub/} mit Bootloader dateien
-			 und Ordner \textit{efi/} mit EFI-Programmen
-			 Diese Verzeichnis muss beim Systemstart vorhanden sein.
+			 Außerdem enthält dieser Verzeichnis Ordner \textit{grub/} mit den Bootloader Dateien
+			 und dem Ordner \textit{efi/} mit EFI-Programmen
+			 Dieses Verzeichnis muss beim Systemstart vorhanden sein.
 			\item \textbf{/bin} - Enthält ausführbare Dateien (Programme).
-			Es handelt sich bei den Dateien um System-Tools(soche wie), die von allen Benutzern
-			genutzt werden( im gegensatzt zu \textit{/sbin}). -Diese Ordner darf keine
-			weitere Verzeichnisse enthalten. Diese Verzeichnis muss beim Systemstart vorhanden sein.
-			\item \textbf{/dev} - Diese Verzeichnis beinhaltet alle für den zugriff
+			Es handelt sich bei den Dateien um System-Tools, die von allen Benutzern
+			genutzt werden( im Gegensatz zu \textit{/sbin}). - Dieser Ordner darf keine
+			weitere Verzeichnisse enthalten. Dieses Verzeichnis muss beim Systemstart vorhanden sein.
+			\item \textbf{/dev} - Dieses Verzeichnis beinhaltet alle für den Zugriff
 			auf die Geräte erforderliche Dateien (z.B. für  Festplatten und DVD-Laufwerke).
-			(ausgenohmen die mit hot-Plugin eingebunden werden, dafür gibt es Ordner \textit{/udev})
+			(ausgenommen sind jene die mit hot-Plugin eingebunden werden, dafür gibt es den Ordner \textit{/udev})
 			Diese Verzeichnis muss beim Systemstart vorhanden sein.
 			\item \textbf{/etc} - steht für \textit{``editable text configuration''}.
 			Hier liegen Konfigurations- und Informationsdateien des Basissystems.
-			Hier findet man solche dateien wie z.B. \textit{fstab, hosts, lsb-release, blkid.tab}.
-			Diese Konfigurationsdateien können von gleichnamigen Dateien in Homeverzeichnis überschrieben werden.
-			Diese Verzeichnis muss beim Systemstart vorhanden sein.
+			Hier findet man solche Dateien wie z.B. \textit{fstab, hosts, lsb-release, blkid.tab}.
+			Diese Konfigurationsdateien können von gleichnamigen Dateien im Homeverzeichnis überschrieben werden.
+			Dieses Verzeichnis muss beim Systemstart vorhanden sein.
 			\item \textbf{/home} -
 			\item \textbf{/lib} -
 			\item \textbf{/lost+found} -
@@ -68,5 +68,547 @@ Entwickeln Sie ein Programm myls, das den Inhalt von Verzeichnissen ausgibt. Die
 gende Funktion ist in etwa vergleichbar mit dem Shell-Kommando ls.
 
 \subsection{Durchführung}
+\begin{itemize}
+	\item Zuerst definieren wir die maximale länge für Pfad \command{\#define MAX_PATH 1024}
+\item Wir definieren eine Variable die den aktuellen Pfad speichert \command{char path[MAX_PATH];}
+	\item Der Name des auszulesenden Verzeichnisses soll dem Programm als Argument übergeben
+ werden. Wird kein Verzeichnis angegeben, so wird das lokale Verzeichnis ausgegeben.
+
+ \item Hierzu nutzen wir die Eingabeparameter der main-Methode.\newline
+  \command{main(int argc, char *argv[])} Um Parameter annehmen zu können
+ nutzen wir die Variable argc um die Anzahl der übergebenen Argumente
+ zu zählen sowie das Array argv um die Argumente auslesen zu können.
+\item Im nächsten Schritt prüfen wir die Anzahl der übergebenen
+Argumente.
+\newline
+\command{if (argc > 1 && strncmp(argv[1],"-",1)!=0)}
+\newline
+Wurden Argumente übergeben so ist die Variable argc größer als 1.
+Zusätzlich prüfen wir ob das erste übergebene Argument mit einem - anfängt
+(mittels strncmp aus header string.h, es wird nur das erste Zeichen geprüft).
+Dies würde bedeuten dass der User das listing aus dem lokalen Pfad ausführen
+möchte da das - Zeichen das Zeichen für die Parameter ist.
+Ist dies der Fall so wird der else-Teil ausgeführt. Dieser wird auch ausgeführt
+wenn keine Argumente übergeben werden.
+\command{getcwd(path, MAX_PATH);} Im else-Teil wird dann das aktuelle
+Working Directory mittels getcwd ermittelt und dem Array path übergeben.
+Wurde ein Pfad übergeben so betrachten wir den If Block.
+\command{strcpy(path, argv[1]);} Hier überweisen wir dem path Array den vom
+User übergebenen Pfad.
+\item Danach bauen wir eine Abfrage ein ob ein übergebener Pfad mit einem
+/ endet. Ist dies nicht der Fall so hängen wir eines an.
+Hierzu ermitteln wir zunächst die Länge des Pfades:
+\command{int len = strlen(path);}
+Dann erzeugen wir einen Pointer der auf den letzten Index des Arrays
+zeigt \command{const char *last = &path[len - 1];}
+Nun prüfen wir ob dieses Zeichen ein / ist
+\command{if (strcmp(last, ``/'') != 0)}
+Ist dies nicht der Fall so hängen wir eins an.
+\command{strcat(path,"/");}
+Diese Methoden der String-Manipulation entstammen dem string.h Header.
+\item Wir definieren eine Variable \command{int c;} wo wir eine einzige Option
+aus der übergebenen Options Liste speichern
+\item Um die Optionen für myls zu speichern und weiter auszuwerten legen wir drei Variablen an
+\begin{itemize}
+	\item \command{int aoption = 0} für Option -a (gültige Werte 0 oder 1)
+	\item \command{int loption = 0;} für -l und g Option (gültige Werte 0, 1, 2)
+	\item \command{int ooption = 0;} für -o Option (gültige Werte 0 oder 1)
+\end{itemize}
+
+\item Wir nutzen die Funktion \command{getopt(argc, argv, ``algo'')} aus dem Header \command{unistd.h},
+die das Auslesen der Optionen aus dem Argument-string erleichtert. Als ersten und zweiten Argument
+werden die Argumente die die main Methode erhält an \command{getopt()} übergeben,
+das dritte Argument übergeben wir als String aus allen gültigen Argumenten,
+nach denen durchgesucht wird.
+Wenn es keine Argumente in \command{argv0} gibt, dann liefert die Methode den Wert -1 zurück.
+\item Den Rückgabewert von \command{getopt} nutzen wir als Abbruch Bedingung für die while-Schleife
+
+\command{while ((c = getopt(argc, argv, ``algo'')) != -1)}
+\item In der while-Schleife prüfen wir mit switch-case welche Option ausgelesen wurde,
+und ändern die Werte von den oben genannten Variablen: a-,l-,ooption.
+Wird beispielsweise ein a gelesen so wird der zutreffende case ausgeführt
+und das aoption Flag auf 1 gesetzt.
+Bei einem gelesenen l wird die loption auf 1 gesetzt.
+Wird ein g gesetzt so wird die loption auf 2 gesetzt, folglich erkennen wir
+dass das längere Ausgabeformat aber ohne UserID gewünscht ist.
+Wird ein o gesetzt so setzen wir die ooption auf 1. Zudem prüfen wir
+ob das loption Flag bereits gesetzt wurde. Wurde beispielsweise nur ein
+o als Parameter übergeben so müssen wir das loption Flag auf 1 setzen damit
+wir wissen dass das längere Ausgabeformat gewünscht ist.
+Die ooption sorgt dafür dass die GroupID ausgeblendet werden soll.
+Kombinationen der Parameter sind somit möglich.
+\item Danach rufen wir die Funktion \command{readPath(path, aoption, loption, ooption);}
+auf. Wir übergeben hier den Pfad sowie die 3 Flags.
+
+ \begin{lstlisting}
+	 int main(int argc, char *argv[]) {
+	if (argc > 1 && strncmp(argv[1],"-",1)!=0) {
+		strcpy(path, argv[1]);
+	} else {
+		getcwd(path, MAX_PATH);
+	}
+	int len = strlen(path);
+	const char *last = &path[len - 1];
+	if (strcmp(last, "/") != 0) {
+		strcat(path,"/");
+	}
+	printf("input path: %s", path);
+	int c;
+	int aoption = 0;
+	int loption = 0;
+	int ooption = 0;
+	while ((c = getopt(argc, argv, "algo")) != -1) {
+		switch (c) {
+		case 'a':
+			aoption = 1;
+			break;
+		case 'l':
+			loption = 1;
+			break;
+		case 'g':
+			loption = 2;
+			break;
+		case 'o':
+			if(loption==0)
+				loption=1;
+			ooption = 1;
+			break;
+		}
+	}
+
+	readPath(path, aoption, loption, ooption);
+	return 0;
+}
+ \end{lstlisting}
+\item Um den Verzeichnis Inhalt und Informationen auszulesen definieren wir eine Funktion
+
+\command{void *readPath(char *path, int aoption, int loption, int ooption)}
+
+\item Die Funktion nimmt als erstes Argument den Verzeichnisnamen, deren Inhalt ausgelesen wird,
+die 3 folgenden Argumente sind die FLags.
+\item Um Ordner Information zu lesen nutzen wir die Bibliothek \command{dirent.h},
+\item Wir legen uns eine Variable für den aufgelösten Pfad an, mit der
+bereits definierten Größe des maximalen Pfades
+\command{char resolved_path[MAX_PATH];}
+Außerdem definieren wir eine Variable  \command{DIR *dir = NULL;},
+die den Directory Stream beinhalten wird.
+
+Um den Ordner Inhalt aus dem directory stream zu lesen,definieren wir eine Variable
+
+\command{struct dirent *dptr = NULL;}
+
+Und eine Char Variable die lediglich einen Punkt hält, die wir zum Vergleich
+nutzen werden.
+\command{char *dot = ``.'';}
+
+\item Um den absoluten Pfad zu erhalten nutzen wir die Funktion
+\newline
+\command{realpath((char*)path, resolved_path)}
+\newline
+aus der Standartbibliothek,
+als Parameter übergeben wir den vom Benutzer übergebenen Pfad \command{path}
+und unsere Variable \command{resolved_path}, die das Ergebnis erhalten wird,
+dabei casten wir die Variable \command{path} zu einem char pointer.
+Die Funktion wird einen \command{NULL} pointer zurückliefern, falls beim Pfadname auflösen ein Fehler auftritt,
+deswegen können wir das Ergebnis der Variable \command{realpath} in der If-Abfrage überprüfen,
+und falls etwas mit dem Pfad nicht stimmt, kann die Funktion \command{readPath} ihre Arbeit abbrechen.
+\item Wenn der Pfad erfolgreich aufgelöst wurde können wir weiter vorgehen.
+\item Wir öffnen den directory stream mit der Funktion \command{opendir(resolved_path)},
+die Funktion wird einen \command{NULL} Pointer zurückliefern wenn ein Fehler beim Öffnen auftritt.
+Wir fragen dsd Resultat ebenfalls in der If-Abfrage ab, wenn der Ordner erfolgreich geöffnet wurde,
+kann man weiter vorgehen, ansonsten muss die Funktion \command{readPath} ihr Arbeit abbrechen.
+
+\command{if ((dir = opendir(resolved_path)))}
+
+\item Nun kann man mit der While-Schleife durch die einzelnen Einträge im
+directory stream iterieren,
+dabei hilft uns die Variable \command{dptr}, die bei jeder Iteration auf
+den nächsten Eintrag zeigt.
+Um den nächsten Eintrag auszulesen, benutzen wir die Funktion \command{readdir(dir)},
+die als Parameter einen directory stream annimmt
+
+\command{while ((dptr = readdir(dir)))}
+
+\item Innerhalb der while-Schleife prüfen wir ob das aoption Flag NICHT gesetzt ist
+\command{if (!aoption)}
+
+Wir schließen die Dateien die mit dem Namen \textit{.} beginnen aus,
+indem wir den Namen des aktuellen Eintrags mit der Variable \command{dot} vergleichen.
+Und wenn es sich um diese Dateien handelt, geht die while schleife
+ohne weiteres Vorgehen zur nächsten Iteration.
+
+\command{if (strncmp(dptr->d_name, dot, 1) == 0) continue;}
+
+\item Ist das a-Flag also gesetzt so nehmen wir auch die Versteckten Dateien
+mit.
+
+\item Nun prüfen wir ob das l-Flag gesetzt wurde \command{if (loption!=0)}
+
+Ist dies der Fall, so legen wir uns eine Struktur vom Typ stat an, wo
+wir Dateiinformationen speichern können.
+\command{struct stat lstruct;}
+
+Die Methode \command{printlstruct(dptr->d_name,loption, ooption);} wird
+später erklärt. Sie erhält als Eingabeparameter den aktuellen File-Namen, sowie
+die l- und o-Flags.
+
+\item Mittels \command{lstat(dptr->d_name, &lstruct)} lesen wir die Information von der aktuellen Datei aus
+und Speichern diese in der vorher definierten \command{lstruct} Variable.
+Dabei folgt die Funktion im Gegensatz zur Funktion \command{stat()} nicht dem symbolic link,
+sondern es wird die Information über den Link selbst ausgelesen und nicht über die referenzierte Datei.
+Wenn die Information erfolgreich ausgelesen wurde, liefert die funktion den Wert 0 zurück,
+sonst den Wert -1
+\item Wir nutzen den Rückgabewert von der Funktion  \command{lstat} in der if abfrage,
+um zu prüfen ob der lstat Aufruf funktioniert hat.
+\item Nun wird geprüft, ob es sich bei der Datei um eine ausführbare Datei handelt.
+Ist dies der Fall so soll die Datei rot ausgegeben werden.
+\item Dazu prüfen wir innerhalb der if-Abfrage ob der User, die Gruppe oder
+oder Andere execute-Rechte haben. Zusätzlich prüfen wir ob es eine
+Ausführbare Datei ist \command{S_IEXEC}. Dieses Attribut ist allerdings
+bereits durch \command{S_IXUSR} abgelöst worden.
+
+Um also auf diese Rechte vergleichen zu können lesen wir aus dem
+struct den mode\_t aus in denen diese Flags gesetzt sind.
+Der Vergleich ob das Flag gesetzt ist erfolgt über den logischen
+UND-Operator.
+\command{(lstruct.st_mode & S_IXUSR)}
+
+Diese Abfrage zieht sich für die anderen Abfragen so durch.
+\begin{lstlisting}
+	if((lstat(dptr->d_name, &lstruct) == 0 &&
+	((lstruct.st_mode & S_IXUSR) ||
+	(lstruct.st_mode & S_IXGRP) ||
+	(lstruct.st_mode & S_IXOTH) ||
+	(lstruct.st_mode & S_IEXEC) ))
+\end{lstlisting}
+
+\item Ist also der Aufruf von lstat geglückt, und ist die Datei eine ausführbare
+Datei, so legen wir den Farb Code für die nächste Ausgabe fest.
+
+\command{printf("\\033[0;31;1m");}
+
+Die Eröffnung der Sequenz ist dabei die \command{\\033[}.
+
+Es folgt die Hintergrundfarbe die wir gerne bei schwarz belassen \command{0;}.
+
+Nun die Schriftfarbe \command{31;}. Der Farbcode entspricht Rot.
+
+Es folgt die Vordergrundfarbe \command{1m} die keinen Effekt hat.
+Das m schließt die Sequenz ab.
+Nun ist jeder folgende Output Rot.
+
+\item Um die Dateien mit Endung \textit{.c} herauszufiltern, und diese anschließend grün zu färben
+ermitteln wir zuerst die Länge des aktuellen Dateinamens und speichern diese in einer Variable
+
+\command{int len = strlen(dptr->d_name);}
+
+und wir erzeugen einen Pointer zum vorletzten Zeichen im Dateinamen
+
+\command{const char *last_two = &dptr->d_name[len - 2];}.
+
+Anschließend prüfen wir mit der Funktion \command{strcmp(last_two, ``.c'')}
+anhand der letzten zwei Zeichen ob es sich um die Endung ``.c'' handelt.
+Wenn dies der Fall wird die Ausgabe grün gefärbt \command{printf("\\033[0;32;1m");}
+
+\item Außerhalb des if-Blocks wird dann der Name der aktuellen Datei
+ausgegeben \command{printf(``\%s\n'', dptr->d_name);}.
+
+\item Falls der loption Flag gesetzt war, so muss nun die Textfarbe wieder
+zurückgesetzt werden \command{if (loption!=0) printf("\033[0;0;0m");}.
+
+\item Ist die while-Schleife durchgelaufen so schließen wir den directory
+stream \command{closedir(dir);}.
+
+
+\begin{lstlisting}[language=C]
+void *readPath(char *path, int aoption, int loption, int ooption) {
+char resolved_path[MAX\_PATH];
+DIR *dir = NULL;
+struct dirent *dptr = NULL;
+char *dot = ``.'';
+if (realpath(path, resolved_path)) {
+printf("resolved_path: %s\n", resolved_path);
+if ((dir = opendir(resolved_path))) {
+while ((dptr = readdir(dir))) {
+if (!aoption) {
+	if (strncmp(dptr->d_name, dot, 1) == 0) {
+		continue;
+	}
+}
+if (loption!=0) {
+	struct stat lstruct;
+
+	printlstruct(dptr->d_name,loption, ooption);
+
+	if(lstat(dptr->d_name, &lstruct) == 0 &&
+
+	((lstruct.st_mode & S_IXUSR) ||
+	(lstruct.st_mode & S_IXGRP) ||
+
+	(lstruct.st_mode & S_IXOTH) ||
+	(lstruct.st_mode & S_IEXEC) )){
+		printf("\\033[0;31;1m");
+	}
+
+	int len = strlen(dptr->d_name);
+	const char *last_two = &dptr->d_name[len - 2];
+	if (strcmp(last_two, ``.c'') == 0) {
+		printf("\\033[0;32;1m");
+	}
+
+}
+printf("\%s\n", dptr->d_name);
+if (loption!=0)
+	printf("\\033[0;0;0m");
+	}
+closedir(dir);
+}
+}
+return NULL;
+}
+\end{lstlisting}
+\item Um die ausführlichen Informationen über den File auszugeben, definieren wir eine Funktion
+\newline
+\command{printlstruct(char * filename, int loption, int ooption)}
+\newline
+\item Um auf die Fileattribute zugreifen zu können definieren wir die Struktur
+\newline \command{struct stat lstruct;}
+\item Wir brauchen auch einen vollen Pfad für die Dateinamen für die Funktion \command{lstat}
+Dafür definieren wir eine Variable \command{char fullpath[MAX_PATH];} und dann
+bauen wir den aus der in der Variable \command{path} vorhandenen Pfad zum Verzeichnis
+und aus dem aktuellen Dateinamen zusammen.
+\begin{lstlisting}
+	strcpy(fullpath,path);
+	strcat(fullpath,filename);
+\end{lstlisting}
+\item Diese Pfad übergeben wir zusammen mit \command{lstruct} an die Funktion
+\command{lstat(fullpath,&lstruct);}
+\item Anschließend überprüfen wir ob die Lese-Schreib-Execute Rechte für den
+Owner, die Gruppe und Andere gesetzt sind. Hierzu prüfen wir die einzelnen
+Flags und geben dann bei Erfolg oder Misserfolg das entsprechend Zeichen aus.
+
+\begin{lstlisting}
+printf( (lstruct.st_mode & S_IRUSR) ? "r" : "-");
+printf( (lstruct.st_mode & S_IWUSR) ? "w" : "-");
+printf( (lstruct.st_mode & S_IXUSR) ? "x" : "-");
+printf( (lstruct.st_mode & S_IRGRP) ? "r" : "-");
+printf( (lstruct.st_mode & S_IWGRP) ? "w" : "-");
+printf( (lstruct.st_mode & S_IXGRP) ? "x" : "-");
+printf( (lstruct.st_mode & S_IROTH) ? "r" : "-");
+printf( (lstruct.st_mode & S_IWOTH) ? "w" : "-");
+printf( (lstruct.st_mode & S_IXOTH) ? "x\t" : "-\t");
+\end{lstlisting}
+
+\item Es folgt die Ausgabe der verschiedenen Strukturelemente der stat
+Struktur.
+\item Nun geben wir die Anzahl der Links auf die Datei aus.
+\newline
+\command{printf("\%ld",(long) lstruct.st_nlink);}
+\newline
+\item Für die UserID des Dateibesitzers prüfen wir ob das g Flag nicht
+gesetzt wurde. Dann soll es ausgeführt werden.
+\newline
+\command{if(loption!=2) printf("\\t\%ld",(long) lstruct.st_uid);}
+\newline
+\item Nun prüfen wir ob das o Flag gesetzt wurde. Ist dies nicht
+der Fall so geben wir die GroupID des Dateibesitzers aus.
+\newline
+\command{if(ooption==0)	printf("\\t\%ld",(long) lstruct.st_gid);}
+\newline
+
+\item Es folgt die Ausgabe der Dateigröße in Bytes
+\newline
+\command{printf("\\t\%lld",(long long) lstruct.st_size);}
+\newline
+
+\item Als nächstes folgen die Ausgaben für die Zeitpunkte des letzten Zugriffs,
+der letzten Modifikation und der letzten Statusänderung.
+
+\begin{lstlisting}
+	printf("\t%s",ctime(&lstruct.st_atime));
+	printf("\t%s", ctime(&lstruct.st_mtime));
+	printf("\t%s", ctime(&lstruct.st_ctime));
+\end{lstlisting}
+
+\item Abschließend die Ausgabe der I/O Block Größe.
+\newline
+\command{printf("\\t\%ld ",(long) lstruct.st_blksize);}
+\newline
+
+
+\begin{lstlisting}
+void printlstruct(char * filename, int loption, int ooption){
+	struct stat lstruct;
+	char fullpath[MAX_PATH];
+	strcpy(fullpath,path);
+
+	strcat(fullpath,filename);
+	lstat(fullpath,&lstruct);
+
+	printf( (lstruct.st_mode & S_IRUSR) ? "r" : "-");
+	printf( (lstruct.st_mode & S_IWUSR) ? "w" : "-");
+	printf( (lstruct.st_mode & S_IXUSR) ? "x" : "-");
+	printf( (lstruct.st_mode & S_IRGRP) ? "r" : "-");
+	printf( (lstruct.st_mode & S_IWGRP) ? "w" : "-");
+	printf( (lstruct.st_mode & S_IXGRP) ? "x" : "-");
+	printf( (lstruct.st_mode & S_IROTH) ? "r" : "-");
+	printf( (lstruct.st_mode & S_IWOTH) ? "w" : "-");
+	printf( (lstruct.st_mode & S_IXOTH) ? "x\t" : "-\t");
+
+	printf("%ld",(long) lstruct.st_nlink);
+	if(loption!=2)
+		printf("\t%ld",(long) lstruct.st_uid);
+	if(ooption==0)
+		printf("\t%ld",(long) lstruct.st_gid);
+	printf("\t%lld",(long long) lstruct.st_size);
+	printf("\t%s",ctime(&lstruct.st_atime));
+	printf("\t%s", ctime(&lstruct.st_mtime));
+	printf("\t%s", ctime(&lstruct.st_ctime));
+	printf("\t%ld ",(long) lstruct.st_blksize);
+}
+\end{lstlisting}
+
+\end{itemize}
+Gesamte Code:
+\begin{lstlisting}
+/*
+* myls.c
+*
+*/
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <unistd.h>
+#include <time.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <unistd.h>
+
+#define MAX_PATH 1024
+
+char path[MAX_PATH];
+
+void printlstruct(char * filename, int, int);
+void *readPath(char *path, int, int, int);
+
+int main(int argc, char *argv[]) {
+if (argc > 1 && strncmp(argv[1],"-",1)!=0) {
+strcpy(path, argv[1]);
+} else {
+getcwd(path, MAX_PATH);
+
+}
+int len = strlen(path);
+const char *last = &path[len - 1];
+if (strcmp(last, "/") != 0) {
+strcat(path,"/");
+}
+
+
+printf("input path: %s", path);
+int c;
+int aoption = 0;
+int loption = 0;
+int ooption = 0;
+while ((c = getopt(argc, argv, "algo")) != -1) {
+switch (c) {
+case 'a':
+aoption = 1;
+break;
+case 'l':
+loption = 1;
+break;
+case 'g':
+loption = 2;
+break;
+case 'o':
+if(loption==0)
+loption=1;
+ooption = 1;
+break;
+}
+}
+
+readPath(path, aoption, loption, ooption);
+return 0;
+}
+void *readPath(char *path, int aoption, int loption, int ooption) {
+char resolved_path[MAX_PATH];
+DIR *dir = NULL;
+struct dirent *dptr = NULL;
+char *dot = ".";
+if (realpath(path, resolved_path)) {
+printf("resolved_path: %s\n", resolved_path);
+if ((dir = opendir(resolved_path))) {
+while ((dptr = readdir(dir))) {
+if (!aoption) {
+if (strncmp(dptr->d_name, dot, 1) == 0) {
+continue;
+}
+}
+if (loption!=0) {
+struct stat lstruct;
+
+printlstruct(dptr->d_name,loption, ooption);
+
+if(lstat(dptr->d_name, &lstruct) == 0 && ((lstruct.st_mode & S_IXUSR) ||
+	(lstruct.st_mode & S_IXGRP) || (lstruct.st_mode & S_IXOTH) ||
+	(lstruct.st_mode & S_IEXEC) )){
+printf("\033[0;31;1m");
+}
+
+int len = strlen(dptr->d_name);
+const char *last_two = &dptr->d_name[len - 2];
+if (strcmp(last_two, ".c") == 0) {
+printf("\033[0;32;1m");
+}
+
+}
+printf("%s\n", dptr->d_name);
+if (loption!=0)
+printf("\033[0;0;0m");
+
+}
+closedir(dir);
+}
+}
+return NULL;
+
+}
+
+void printlstruct(char * filename, int loption, int ooption){
+struct stat lstruct;
+char fullpath[MAX_PATH];
+strcpy(fullpath,path);
+
+strcat(fullpath,filename);
+lstat(fullpath,&lstruct);
+
+printf( (lstruct.st_mode & S_IRUSR) ? "r" : "-");
+printf( (lstruct.st_mode & S_IWUSR) ? "w" : "-");
+printf( (lstruct.st_mode & S_IXUSR) ? "x" : "-");
+printf( (lstruct.st_mode & S_IRGRP) ? "r" : "-");
+printf( (lstruct.st_mode & S_IWGRP) ? "w" : "-");
+printf( (lstruct.st_mode & S_IXGRP) ? "x" : "-");
+printf( (lstruct.st_mode & S_IROTH) ? "r" : "-");
+printf( (lstruct.st_mode & S_IWOTH) ? "w" : "-");
+printf( (lstruct.st_mode & S_IXOTH) ? "x\t" : "-\t");
+
+printf("%ld",(long) lstruct.st_nlink);
+if(loption!=2)
+printf("\t%ld",(long) lstruct.st_uid);
+if(ooption==0)
+printf("\t%ld",(long) lstruct.st_gid);
+printf("\t%lld",(long long) lstruct.st_size);
+printf("\t%s",ctime(&lstruct.st_atime));
+printf("\t%s", ctime(&lstruct.st_mtime));
+printf("\t%s", ctime(&lstruct.st_ctime));
+printf("\t%ld ",(long) lstruct.st_blksize);
+}
+\end{lstlisting}
+
+
+
 
 \subsection{Fazit}

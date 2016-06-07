@@ -79,7 +79,9 @@ void *readPath(char *path, int aoption, int loption, int ooption) {
 
 					printlstruct(dptr->d_name,loption, ooption);
 
-					if(lstat(dptr->d_name, &lstruct) == 0 && ((lstruct.st_mode & S_IXUSR) || (lstruct.st_mode & S_IXGRP) || (lstruct.st_mode & S_IXOTH) || (lstruct.st_mode & S_IEXEC) )){
+					if(lstat(dptr->d_name, &lstruct) == 0 && ((lstruct.st_mode & S_IXUSR) ||
+							(lstruct.st_mode & S_IXGRP) || (lstruct.st_mode & S_IXOTH) ||
+							(lstruct.st_mode & S_IEXEC) )){
 						printf("\033[0;31;1m");
 					}
 
