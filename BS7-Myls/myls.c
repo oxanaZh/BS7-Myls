@@ -80,18 +80,11 @@ void *readPath(char *path, int aoption, int loption) {
 						printf("\033[0;31;1m");
 					}
 
-					//
-
-
-
-					//
-
 					int len = strlen(dptr->d_name);
 					const char *last_two = &dptr->d_name[len - 2];
 					if (strcmp(last_two, ".c") == 0) {
 						printf("\033[0;32;1m");
 					}
-					//free(lstruct);
 
 				}
 				printf("%s\n", dptr->d_name);
@@ -111,12 +104,8 @@ void printlstruct(char * filename, int loption){
 	char fullpath[MAX_PATH];
 	strcpy(fullpath,path);
 
-
-
 	strcat(fullpath,filename);
 	lstat(fullpath,&lstruct);
-
-
 
 	printf( (lstruct.st_mode & S_IRUSR) ? "r" : "-");
 	printf( (lstruct.st_mode & S_IWUSR) ? "w" : "-");
@@ -127,7 +116,6 @@ void printlstruct(char * filename, int loption){
 	printf( (lstruct.st_mode & S_IROTH) ? "r" : "-");
 	printf( (lstruct.st_mode & S_IWOTH) ? "w" : "-");
 	printf( (lstruct.st_mode & S_IXOTH) ? "x\t" : "-\t");
-
 
 	printf("%ld",(long) lstruct.st_nlink);
 	if(loption!=2)
