@@ -1,34 +1,56 @@
-
+\section{Aufgabe 1 Typische Verzeichnisstrukturen}
 	\begin{itemize}
 		\item Geben Sie die typische Verzeichnisstruktur einer aktuellen Linuxdistribution an. Was ist
 		in den Verzeichnissen enthalten? Nennen Sie mindestens fünf Beispiele (wie /etc, /usr
 		usw.). Finden Sie zus ̈atzlich heraus, wo Log-Dateien gespeichert werden.
 		Wo liegen ausgelagerte Inhalte des Hauptspeichers?
 
-		Antwort: .
+		Antwort: Ubuntu 16.04 Verzeichnissystem entspricht Filesystem Hierarchy Standard(FHS):
 
-		Hierarhie:
 		\begin{itemize}
-			\item / - Rootverzeichnis für alle andere Linux Verzeichnisse,
-			\item /bin - binaries - Ausführbare dateien (Programme),
-			\item /boot -
-			\item /dev -
-			\item /etc -
-			\item /home -
-			\item /lib -
-			\item /lost+found -
-			\item /media -
-			\item /mnt -
-			\item /opt -
-			\item /proc -
-			\item /root -
-			\item /run -
-			\item /sbin -
-			\item /srv -
-			\item /sys -
-			\item /tmp -
-			\item /usr -
-			\item /var -
+			\item \textbf{/} - Rootverzeichnis für alle anderen Linux Verzeichnisse.
+			 In der Regel entspricht der Bootpartition (wenn nicht anders beim Installieren eingestellt wurde),
+			 deswegen enthält  symbolischen Verknüpfungen für initrd.img und vmlinuz,
+			 die in Ordner \textit{/boot} liegen
+			 \item \textbf{/boot} - beinhaltet alle für Systemstart(Booten) benötigte Dateien
+			 solche wie z.B Kernel \footnote{
+			 für Desktop \textit{vmlinuz-versionsnummer-generic},
+			 für Server \textit{vmlinuz-versionsnummer-server},
+			 für virtuelle Maschinen \textit{vmlinuz-versionsnummer-virtual}
+			 }, initiale Ramdisk \footnote{
+			 \textit{initrd.img-versionsnummer-generic}/-\textit{server}/-\textit{virtual}}
+			 und das Programm für den Memorytest \textit{memtest86.bin}.
+			 Außerdem enthält dieser Verzeichnis Ordner \textit{grub/} mit Bootloader dateien
+			 und Ordner \textit{efi/} mit EFI-Programmen
+			 Diese Verzeichnis muss beim Systemstart vorhanden sein.
+			\item \textbf{/bin} - Enthält ausführbare Dateien (Programme).
+			Es handelt sich bei den Dateien um System-Tools(soche wie), die von allen Benutzern
+			genutzt werden( im gegensatzt zu \textit{/sbin}). -Diese Ordner darf keine
+			weitere Verzeichnisse enthalten. Diese Verzeichnis muss beim Systemstart vorhanden sein.
+			\item \textbf{/dev} - Diese Verzeichnis beinhaltet alle für den zugriff
+			auf die Geräte erforderliche Dateien (z.B. für  Festplatten und DVD-Laufwerke).
+			(ausgenohmen die mit hot-Plugin eingebunden werden, dafür gibt es Ordner \textit{/udev})
+			Diese Verzeichnis muss beim Systemstart vorhanden sein.
+			\item \textbf{/etc} - steht für \textit{``editable text configuration''}.
+			Hier liegen Konfigurations- und Informationsdateien des Basissystems.
+			Hier findet man solche dateien wie z.B. \textit{fstab, hosts, lsb-release, blkid.tab}.
+			Diese Konfigurationsdateien können von gleichnamigen Dateien in Homeverzeichnis überschrieben werden.
+			Diese Verzeichnis muss beim Systemstart vorhanden sein.
+			\item \textbf{/home} -
+			\item \textbf{/lib} -
+			\item \textbf{/lost+found} -
+			\item \textbf{/media} -
+			\item \textbf{/mnt} -
+			\item \textbf{/opt} -
+			\item \textbf{/proc} -
+			\item \textbf{/root} -
+			\item \textbf{/run} -
+			\item \textbf{/sbin }-
+			\item \textbf{/srv }-
+			\item \textbf{/sys} -
+			\item \textbf{/tmp} -
+			\item \textbf{/usr} -
+			\item \textbf{/var }-
 
 		\end{itemize}
 
@@ -39,7 +61,7 @@
 	\subsection{Fazit}
 
 \newpage
-\section{Aufgabe 1 Typische Verzeichnisstrukturen}
+\section{Aufgabe 2 Typische Verzeichnisstrukturen}
 \subsection{Vorbereitung}
 Bearbeiten Sie die folgenden Aufgaben und protokollieren Sie Ihr Vorgehen mithilfe der Vorlage.
 Entwickeln Sie ein Programm myls, das den Inhalt von Verzeichnissen ausgibt. Die grundle-
