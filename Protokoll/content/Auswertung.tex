@@ -31,10 +31,10 @@
 			\item \textbf{/bin} - Enthält ausführbare Dateien (Programme).
 			Es handelt sich bei den Dateien um System-Tools(z.B s cp, echo, mkdir, rm), die von allen Benutzern
 			genutzt werden( im Gegensatz zu \textit{/sbin}). - Dieser Ordner darf keine
-			weitere Verzeichnisse enthalten. Dieses Verzeichnis muss beim Systemstart vorhanden sein.
+			weiteren Verzeichnisse enthalten. Dieses Verzeichnis muss beim Systemstart vorhanden sein.
 			\item \textbf{/dev} - Dieses Verzeichnis beinhaltet alle für den Zugriff
 			auf die Geräte erforderliche Dateien (z.B. für  Festplatten, DVD-Laufwerke, Maus, Monitor).
-			Hier werden z.B. Festplatenn partitionen eingebunden. Die Dateien werden als Schnittstellen
+			Hier werden z.B. Festplaten Partitionen eingebunden. Die Dateien werden als Schnittstellen
 			für Hardware benutzt.
 			(ausgenommen sind jene die mit hot-Plugin eingebunden werden, dafür gibt es den Ordner \textit{/udev})
 			Diese Verzeichnis muss beim Systemstart vorhanden sein.
@@ -42,22 +42,22 @@
 			Hier liegen systemweit gültige Konfigurations- und Informationsdateien des Basissystems.
 			Hier findet man solche Dateien wie z.B. \textit{fstab, hosts, lsb-release, blkid.tab}.
 			Diese Konfigurationsdateien können von gleichnamigen Dateien im Homeverzeichnis überschrieben werden.
-			er Ordner enthält viele Verzeichnisse mit Konfigurationsdateien.
+			Der Ordner enthält viele Verzeichnisse mit Konfigurationsdateien.
 			Beispiele:
 			\begin{itemize}
 				\item \textit{/etc/opt}: Verzeichnisse und Konfigurationsdateien für Programme in /opt
-				\item \textit{/etc/network}: Verzeichnisse und Konfigurationsdateien des Netzwerkes (interfaces u.s.w.)
+				\item \textit{/etc/network}: Verzeichnisse und Konfigurationsdateien des Netzwerkes (Interfaces u.s.w.)
 				\item \textit{/etc/init.d}: Enthält Start- und Stopskripte
-				\item \textit{/etc/hosts} Einstellungen für IP-Adresse auflösung
+				\item \textit{/etc/hosts} Einstellungen für IP-Adressen Auflösung
 				\item \textit{/etc/ssh/} enthält SSH Konfigurationsdateien
-				\item \textit{/etc/X11} Konfigurationen für für grafische X-Window-Subsystem
+				\item \textit{/etc/X11} Konfigurationen für grafische X-Window-Subsystem
 			\end{itemize}
 			Dieses Verzeichnis muss beim Systemstart vorhanden sein.
-			\item \textbf{/home} - Dieser verzeichniss enthält ein Home-ordner jedes Benutzers
-			(als name wird Benutzername übernohmen). Hier speichern Benutzer persönliche daten, eigene programme,
-			Konfigurationsdateien die nur für den konkreten Benutzer beim Einlogen verfügbar sind.
-			Der User hat volle Schreib- und Leserechte für eigene Homeverzeichnis.
-			Diese Ordner kann auf eine andere Partition verlegt werden.
+			\item \textbf{/home} - Dieses Verzeichnis enthält ein Home-Ordner jedes Benutzers
+			(als Name wird der Benutzername übernommen). Hier speichern die Benutzer Persönliche Daten, Eigene Programme,
+			und Konfigurationsdateien die nur für den konkreten Benutzer beim Einloggen verfügbar sind.
+			Der User hat volle Schreib- und Leserechte für das eigene Homeverzeichnis.
+			Dieser Ordner kann auf eine andere Partition verlegt werden.
 			Dieses Verzeichnis muss nicht beim Systemstart vorhanden sein.
 			\item \textbf{/lib},\textbf{/lib32},\textbf{/lib64}  - hier liegen wichtige dynamische Bibliotheken des Systems und Kernel-Modules,
 			viele werden beim Systemstart benötigt. z.B:
@@ -66,63 +66,63 @@
 				\item \textit{/lib/udev}: Bibliotheken und Programme für udev
 				\item \textit{/lib/linux}-restricted-modules: Speicherort für eingeschränkte Treiber (z.B. Grafikkarte)
 			\end{itemize}
-			\item \textbf{/lost+found} - Verzeichnis ist in ext2, ext3 und ext4 Dateisystemen vorhanden.
-			Ordner beinhaltet Dateien auf der Festplatte,
+			\item \textbf{/lost+found} - Das Verzeichnis ist in ext2, ext3 und ext4 Dateisystemen vorhanden.
+			Der Ordner beinhaltet Dateien auf der Festplatte,
 			die in der Verzeichnisstruktur nicht mehr zugeordnet werden können (bei System-/Programmabstürze oder Hardware-Fehler).
-			Bei normal funktinierende System soll derORdner leer bleiben.
-			\item \textbf{/media} - Der Verzeichnis wird nur als Einhängerpunkt für Wechseldatenträger
+			Bei einem normal funktionierenden System soll der Ordner leer bleiben.
+			\item \textbf{/media} - Das Verzeichnis wird nur als Einhängepunkt für Wechseldatenträger
 			(solche wie Disketten \textit{/media/floppy}, CD-/DVD-Laufwerke \textit{/media/cdrom},
 			\textit{/media/dvd}, Zip-Disks \textit{media/zip}, externe USB-Festplatten).
-			Das Verzeichnis mus aud der Gleiche Partition mit dem Root-Verzeichnis liegen.
-			\item \textbf{/mnt} - Der Verzeichnis wird als Einhängerpunkt für temporär verfügbare Dateisysteme
-			(z.B. eine Windows Partition um auf die dort gespeicherte Daten zugreifen). Theoretisch man könnte
-			den den Verzeichnis als Einhängerpunk für Wechseldatenträger nutzen, dies wiederspricht aber den
+			Das Verzeichnis muss auf der gleichen Partition mit dem Root-Verzeichnis liegen.
+			\item \textbf{/mnt} - Der Verzeichnis wird als Einhängepunkt für temporär verfügbare Dateisysteme
+			(z.B. eine Windows Partition um auf die dort gespeicherten Daten zuzugreifen). Theoretisch könnte man
+			das Verzeichnis als Einhängepunkt für Wechseldatenträger nutzen, dies wiederspricht aber den
 			FHS Standard.
-			\item \textbf{/opt} - Dieser Ordner wird für die manuelle Installation von Programmen genutzt,
-			die manuell installiert wurden. Der Verzeichnis ist optional und ist nicht für Den Start des System notwendig.
+			\item \textbf{/opt} - Dieser Ordner wird für die manuelle Installation von Programmen genutzt.
+			Deas Verzeichnis ist optional und ist nicht für den Start des Systems notwendig.
 			Deswegen kann er auch auf andere Partition verlagert werden.
-			\item \textbf{/proc} - Der Verzeichnis beinhaltet Prozess- und Systeminformationen und stellt die Schnittstelle zum Kernel dar
-			und ist in eigentlichen Sinne spezielles, virtuelles Dateisystem.
+			\item \textbf{/proc} - Das Verzeichnis beinhaltet Prozess- und Systeminformationen und stellt die Schnittstelle zum Kernel dar
+			und ist im eigentlichen Sinne ein spezielles, virtuelles Dateisystem.
 			z.B: Beispiele:\textit{version} - Kernelversion, \textit{swaps} Swapspeicherinformationen, \textit{cpuinfo}, \textit{interrupts}, usw.
 			Außerden liegen hier Verzeichnisse mit Prozessnumer als Name, die Dateien zu Prozessinformationen enthalten, solche wie
-			\textit{status} Prozessstatus, \textit{limits} Limits für Resourcen Verbrauch.
-			Dieser Ordner ist nicht FHS Standart aber standartmäsig in Linux distribution Vorhanden. Muss bei Systemstart vorhanden sein.
-			\item \textbf{/root} - Das ist der Homeverzeichnis des Superusers (root).
-			Hier hat nur Superuser vole Sreib- und Leserechte.
-			Dieser Ordnermuss immer Vorhanden sein.
+			\textit{status} Prozessstatus, \textit{limits} Limits für Ressourcen Verbrauch.
+			Dieser Ordner ist nicht FHS Standard aber standardmäßig in Linux Distribution vorhanden. Muss beim Systemstart vorhanden sein.
+			\item \textbf{/root} - Das ist das Homeverzeichnis des Superusers (root).
+			Hier hat nur der Superuser volle Schreib- und Leserechte.
+			Dieser Ordner muss immer vorhanden sein.
 			\item \textbf{/run} - Der Ordner wird für Dateien von laufenden Prozessen genutzt.
 			Hier liegen die meisten PID-Files \textit{*.pid} (Process identifier).
-			\item \textbf{/sbin } - hier liegen system binaries, die für essentielle Aufgaben der Systemverwaltung
-			notwendig sind. Diese Programme können nur von Superuser ausgeführt werden.
-			Der Ordner muss auf Rootpartition immer vorhanden sein.
-			\item \textbf{/srv }- hier liegen Dateien für  System-Dienste.
-			Oft werden hier variable Dateien solche wie Logfiles oder Mails  eines Webservers gespeichert,
-			(in Unsrem Ubuntu 14.04 ist dieser Ordner leer).
-			Der Verzeichnis ist optional und ist nicht in allen Linuxdistributionen vorhanden.
-			\item \textbf{/sys} - der Verzeichnis hat ähnliche funktion wie \textit{/proc} und beinhaltet
+			\item \textbf{/sbin } - Hier liegen system binaries, die für essentielle Aufgaben der Systemverwaltung
+			notwendig sind. Diese Programme können nur vom Superuser ausgeführt werden.
+			Der Ordner muss auf der Rootpartition immer vorhanden sein.
+			\item \textbf{/srv }- Hier liegen Dateien für System-Dienste.
+			Oft werden hier variable Dateien solche wie Logfiles oder Mails eines Webservers gespeichert,
+			(in unserem Ubuntu 14.04 ist dieser Ordner leer).
+			Das Verzeichnis ist optional und ist nicht in allen Linuxdistributionen vorhanden.
+			\item \textbf{/sys} - Das Verzeichnis hat eine ähnliche Funktion wie \textit{/proc} und beinhaltet
  			hauptsächlich Kernelschnittstellen.
 		  Der Ordner ist im FHS noch nicht spezifiziert.
-			\item \textbf{/tmp} - wird für temporäre Dateien von Programmen genutzt.
+			\item \textbf{/tmp} - Wird für temporäre Dateien von Programmen genutzt.
 			Nach FHS standart wird dieser Ordner nach jedem Neustart bereinigt.
-			Jeder Benutzer hat vollen Zugrif nur auf seine eigene temporäre Dateien.
+			Jeder Benutzer hat vollen Zugrif nur auf seine eigenen temporären Dateien.
 			\item \textbf{/usr} - Diese Verzeichnisstruktur enthält die meisten Systemtools, Bibliotheken und installierten Programme.
 			Hier werden Programme gespeichert die von Paketverwaltung installiert wurden.
 			Es liegen folgende Unterordner vor:
 			\begin{itemize}
-				\item \textit{/usr/bin} - hier werden Ausführbare Programme gespeichert
-				\item \textit{/usr/include} - hier befinden sich Header-Dateien, die man beim C-Programmierung
-				in Source-Code includiert.
-				\item \textit{/usr/lib} - weitere Programm-Bibliotheken
-				\item \textit{/usr/local} - Der Ordner hat gleiche Struktur wie \textit{/usr} selbst, und kann
-				für manuel installierte Programme genutzt werden (wie /opt).
+				\item \textit{/usr/bin} - Hier werden Ausführbare Programme gespeichert
+				\item \textit{/usr/include} - Hier befinden sich Header-Dateien, die man bei der C-Programmierung
+				im Source-Code inkludiert.
+				\item \textit{/usr/lib} - Weitere Programm-Bibliotheken
+				\item \textit{/usr/local} - Der Ordner hat die gleiche Struktur wie \textit{/usr} selbst, und kann
+				für manuell installierte Programme genutzt werden (wie /opt).
 				\item \textit{/usr/sbin} - Hier liegen optionale Systemprogramme
-				\item \textit{/usr/share} - hier liegen sich nicht ändernde, architekturunabhängige Dateien.
-				\item \textit{/usr/share/applications} - hier findet man Programmstarter, die für Anwendungsmenüs genutzt werden
-				\item \textit{/usr/share/man} - beinhaltet Man-pages
+				\item \textit{/usr/share} - Hier liegen sich nicht ändernde, architekturunabhängige Dateien.
+				\item \textit{/usr/share/applications} - Hier findet man Programmstarter, die für Anwendungsmenüs genutzt werden
+				\item \textit{/usr/share/man} - Beinhaltet Man-pages
 			\end{itemize}
-			\item \textbf{/var } -wird zu speicherung veränderliche Daten genutzt. Hier liegen nur Vrzeichnisse,
-			deren inhalt regelmäsig verändert wird.
-			z.B. in \textit{/var/log} Ordner werden ständig Logdateien überschrieben und neu angelegt.
+			\item \textbf{/var } - Wird zur Speicherung von veränderlichen Daten genutzt. Hier liegen nur Verzeichnisse,
+			deren Inhalt regelmäßig verändert wird.
+			z.B. in \textit{/var/log} In dem Ordner werden ständig Logdateien überschrieben und neu angelegt.
 
 
 		\end{itemize}
@@ -130,17 +130,24 @@
 zur vorherigen Aufgabe einige beispielhafte Inhalte der jeweiligen Verzeichnisse (wie z.B,
 \textit{C:\textbackslash Windows\textbackslash System32}).
 \textbf{Antwort:} Windows Ordner: (Pfade/Bezeichnungen können je nach Betriebssystem abweichen)
-\footnote{Quellen:}
+\footnote{Quellen:
+\href{https://technet.microsoft.com/en-us/library/bb457124.aspxEEAA}{www.technet.microsoft.com},
+\href{https://de.wikipedia.org/wiki/Sonderverzeichnis}{www.wikipedia.org/wiki/Sonderverzeichnis},
+\href{https://en.wikipedia.org/wiki/Program_Files}{www.wikipedia.org/wiki/Program\_Files},
+}
+
 \begin{itemize}
-	\item \textbf{System32}:	\textit{C:\textbackslash Windows\textbackslash System32} - ist das Systemverzeichnis von Windows.
+	\item \textbf{System32}:	\textit{C:\textbackslash Windows\textbackslash System32} -
+	ist das Systemverzeichnis von Windows. Hier liegen für das System essentielle
+	Daten, Programme und Bibliotheken
 
 	Inhalte:
 	\begin{itemize}
-		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash Configuration} -
-		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash config} -
-		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash de-DE} -
-		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash GroupPolicy} -
-		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash Microsoft} -
+		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash Configuration} - Konfigurationsdateien.
+		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash config} - Registry Dateien und Event logs.
+		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash de-DE} - hier liegen die Lokalisierungspakete für die deutsche Sprache
+		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash GroupPolicy} - administrative Templates und Scriptfiles (Gruppenrechte)
+		\item \textit{C:\textbackslash Windows\textbackslash System32\textbackslash Microsoft} - Kryptographie Dateien (Verschlüsselung)
 \end{itemize}
  \item \textbf{Program Files:}	 \textit{C:\textbackslash Program Files(x86)} -
 	ist der standard Ordner von Microsoft indem Anwendungen gespeichert werden, die
@@ -181,8 +188,6 @@ zur vorherigen Aufgabe einige beispielhafte Inhalte der jeweiligen Verzeichnisse
 	\begin{itemize}
 	\item \textit{C:\textbackslash Users\textbackslash Username\textbackslash Favorites\textbackslash Acer\textbackslash Acer.url}
 	\item \textit{C:\textbackslash Users\textbackslash Username\textbackslash Favorites\textbackslash Acerv\textbackslash eBay.url}
-	\item \textit{‪C:\textbackslash Users\textbackslash Username\textbackslash Favorites\textbackslash Links\textbackslash Acer Zubehoer Shop.url}
-	‪\item \textit{C:\textbackslash Users\textbackslash Username\textbackslash Favorites\textbackslash Bing.url}
 \end{itemize}
 
 \item 	\textbf{Eigene Dateien:} 	\textit{C:\textbackslash Users\textbackslash Username} -
@@ -200,13 +205,50 @@ Inhalte:
 	\end{itemize}
 
 	\subsection{Fazit}
+	In der Linux Distribution werden Log Dateien nach FHS Standart im Verzeichnis \textit{/var/log} hinterlegt.
+	In Linux werden Inhalte des Hauptspeichers auf eine spezielle swap-Partition ausgelagert. Wir können in
+	\textit{/proc/swap} Dateien sehen, die in unserem konkreten Ubuntu-System die Inhalte auf \textit{/dev/sda4} auslagert.
+
+	Bei Windows und Linux gibt es Verschiedene Standarte für Verzeichnis Struktur.
 
 \newpage
 \section{Aufgabe 2 Typische Verzeichnisstrukturen}
-\subsection{Vorbereitung}
 Bearbeiten Sie die folgenden Aufgaben und protokollieren Sie Ihr Vorgehen mithilfe der Vorlage.
 Entwickeln Sie ein Programm myls, das den Inhalt von Verzeichnissen ausgibt. Die grundle-
 gende Funktion ist in etwa vergleichbar mit dem Shell-Kommando ls.
+\subsection{Vorbereitung}
+Zur Testzwecken haben wir einen Test Ordner erstellt \textit{testDir}.
+im Ordner haben wir einige Dateien und Verzeichnise angelegt(darunter ein symlink und versteckte Dateien):
+\begin{lstlisting}
+	cd testDir
+	touch fileOwnerUserGroupUser
+	touch fileOwnerUserGroupTest
+ 	touch file1
+ 	touch .hiddenFile
+ 	touch file.c
+ 	touch file.cpp
+	touch file2.c
+ 	mkdir dir1
+ 	mkdir .dirHidden
+	touch ausfuerbar
+	ln -s fileOwnerUserGroupTest symLinkToFileOwnerUserGroupTest
+\end{lstlisting}
+wir legen auch eine test Gruppe an, um dn Ergebnis der \command{myls} mit Parametern -g und -o
+sichtbar unt beser interpretierbarer zu machen, denn von uns erstellte Dateien haben als default
+userid = 1000 und Gruppenid = 1000
+
+\begin{lstlisting}
+sudo addgroup test
+Lege Gruppe test (GID 1001) an ...
+Fertig.
+\end{lstlisting}
+nun haben wir eine Gruppe mit Id 1001
+
+wir ändern die Gruppe von File fileOwnerUserGroupTest zu Gruppe mit Id 1001
+\begin{lstlisting}
+sudo chown -c :test fileOwnerUserGroupTest
+\end{lstlisting}
+File \textit{ausfuerbar} bird ausfürbar gemacht
 
 \subsection{Durchführung}
 \begin{itemize}
@@ -751,7 +793,93 @@ printf("\t%ld ",(long) lstruct.st_blksize);
 }
 \end{lstlisting}
 
-
-
-
 \subsection{Fazit}
+
+Um unsere Programm zu testen wechseln  wir ins \textit{testDir} Ordner
+hier rufen wir unsere \command{myls} Programm ohne Parameter auf:
+\begin{lstlisting}
+~$	./myls
+\end{lstlisting}
+und erhalten Ausgabe:
+\begin{lstlisting}
+input path: /home/xenia/testDir/
+resolved_path: /home/xenia/testDir
+ausfuerbar
+symLinkToFileOwnerUserGroupTest
+file.cpp
+file.c
+dir1
+file2.c
+fileOwnerUserGroupUser
+file1
+fileOwnerUserGroupTest
+\end{lstlisting}
+wie man sieht unsere Programm gibt zuerst vollen Pfad zu dem Ordner für den \command{myls} ausgeführt wird,
+dies wurde für testzwecke gemacht
+
+Bei diesen Test haben wir kein Pfad angegeben, deswegen wird das \command{myls} für aktuelen Verzeichniss
+ausgeführt.
+
+Die nächsten Zeilen werden alle Dateien im Ordner \textit{testDir} Angezeigt (ausgenohmen versteckte Dateien)
+
+als nächstes ruffen wir \command{myls} mit Parameter -a auf:
+\begin{lstlisting}
+~$	./myls -a
+\end{lstlisting}
+so werden auch versteckte Dateien aufgelistet:
+\begin{lstlisting}
+..
+ausfuerbar
+symLinkToFileOwnerUserGroupTest
+file.cpp
+file.c
+dir1
+file2.c
+fileOwnerUserGroupUser
+file1
+.
+fileOwnerUserGroupTest
+.dirHidden
+.hiddenFile
+\end{lstlisting}
+Nächste test Parameter -l:
+\begin{lstlisting}
+~$	./myls -l
+\end{lstlisting}
+in der Ausgabe sehen wir dass \command{myls} zusätzliche information zu jeden File ausgibt.
+Außerdem werden Verzeichnisse rot markiert und dateien mit Endung .c grün gefärbt.
+
+Ausgabeformat ist in der reihenfolge:
+
+\includegraphics[width=200px, height = 200px]{image/ausgabe-l}
+
+Nächste Test Parameter -g (kein owner id):
+\begin{lstlisting}
+~$	./myls -g
+\end{lstlisting}
+Wir sehen deutlich beim File fileOwnerUserGroupTest kein owner id(1000) angezeigt wird
+
+\includegraphics[width=200px, height = 200px]{image/ausgabe-g}
+
+Nächste Test Parameter -g (kein group id):
+\begin{lstlisting}
+~$	./myls -o
+\end{lstlisting}
+Wir sehen deutlich beim File fileOwnerUserGroupTest kein group id(1001) angezeigt wird
+
+\includegraphics[width=200px, height = 200px]{image/ausgabe-o}
+
+als nächstes testen wir alle Parameter -algo:
+\begin{lstlisting}
+~$	./myls -algo
+\end{lstlisting}
+hier wird weder owner id noch group id angezeigt
+
+\includegraphics[width=200px, height = 200px]{image/ausgabe-algo}
+
+und alle Parameter in beliebige  Reihenfolge:
+\begin{lstlisting}
+~$	./myls -oag
+\end{lstlisting}
+
+\includegraphics[width=200px, height = 200px]{image/ausgabe-oag}
